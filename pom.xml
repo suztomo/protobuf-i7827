@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.suztomo</groupId>
+    <artifactId>linkage-checker-test</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>test</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.12.4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>linkage-checker-enforcer-rules</artifactId>
+                        <version>1.5.0</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>enforce-linkage-checker</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <!-- Important! Should run after compile -->
+                        <phase>verify</phase>
+                        <configuration>
+                            <rules>
+                                <LinkageCheckerRule implementation="com.google.cloud.tools.dependencies.enforcer.LinkageCheckerRule">
+                                    <reportOnlyReachable>true</reportOnlyReachable>
+                                    <exclusionFile>/tmp/commons-configuration-exclusion.xml</exclusionFile>
+                                </LinkageCheckerRule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
