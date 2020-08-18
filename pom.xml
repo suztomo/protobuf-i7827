@@ -15,39 +15,4 @@
             <version>3.12.4</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M3</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.google.cloud.tools</groupId>
-                        <artifactId>linkage-checker-enforcer-rules</artifactId>
-                        <version>1.5.0</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>enforce-linkage-checker</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <!-- Important! Should run after compile -->
-                        <phase>verify</phase>
-                        <configuration>
-                            <rules>
-                                <LinkageCheckerRule implementation="com.google.cloud.tools.dependencies.enforcer.LinkageCheckerRule">
-                                    <reportOnlyReachable>true</reportOnlyReachable>
-                                    <exclusionFile>/tmp/commons-configuration-exclusion.xml</exclusionFile>
-                                </LinkageCheckerRule>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>
